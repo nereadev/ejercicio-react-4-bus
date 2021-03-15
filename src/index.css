@@ -53,7 +53,7 @@ body {
 label {
   margin-right: 10px;
 }
-input, select, button {
+input, select, button, .tiempo-linea {
   height: 30px;
   line-height: 30px;
   border: none;
@@ -62,7 +62,7 @@ input {
   background: #fff;
   margin-right: 10px;
 }
-select, button {
+select, button, .tiempo-linea {
   background-color: rgb(107, 189, 91);
   color: #fff;
 }
