@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import paradasBus from "./paradasBus.json";
 
 function App() {
 
@@ -15,8 +16,12 @@ useEffect(() => {
   })();
 }, [url]); */
 
+  const [paradasApi, setParadasApi] = useState(paradasBus);
+
+
+
   return (
-    <div className="contenedor">
+    < div className="contenedor" >
       <header className="cabecera">
         <h1>Parada nº 15</h1>
         <div className="display">
@@ -48,10 +53,14 @@ useEffect(() => {
           <label htmlFor="tiempo-linea">Tiempo para que llegue la línea: </label>
           <select id="tiempo-linea">
             <option value="">Elige línea</option>
+            {
+              paradasApi.data.ibus.map(parada =>
+                <option>{parada.line}</option>)
+            }
           </select>
         </form>
       </section>
-    </div>
+    </div >
   );
 }
 
