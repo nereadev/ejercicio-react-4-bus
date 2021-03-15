@@ -3,17 +3,17 @@ import { useEffect, useState } from "react";
 function App() {
 
   /* const appId = "7cafef14";
-  const appKey = "a77affc64ad3ed493dc6a4da7fbec9f7";
-  const url = `https://api.tmb.cat/v1/ibus/stops/2775?app_id=${appId}&app_key=${appKey}`;
-  const [datos, setDatos] = useState(null);
-  useEffect(() => {
-    (async () => {
-      const resp = await fetch(url);
-      const datos = await resp.json();
-      setDatos(datos);
-      console.log(datos);
-    })();
-  }, [url]); */
+const appKey = "a77affc64ad3ed493dc6a4da7fbec9f7"; parada: 3402
+const url = `https://api.tmb.cat/v1/ibus/stops/2775?app_id=${appId}&app_key=${appKey}`;
+const [datos, setDatos] = useState(null);
+useEffect(() => {
+  (async () => {
+    const resp = await fetch(url);
+    const datos = await resp.json();
+    setDatos(datos);
+    console.log(datos);
+  })();
+}, [url]); */
 
   return (
     <div className="contenedor">
