@@ -1,0 +1,31 @@
+{
+    "status": "success",
+    "data": {
+        "ibus": [
+            {
+                "routeId": "0230",
+                "line": "23",
+                "text-ca": "7 min",
+                "t-in-s": 441,
+                "destination": "Parc Logístic",
+                "t-in-min": 7
+            },
+            {
+                "routeId": "0230",
+                "line": "7",
+                "text-ca": "10 min",
+                "t-in-s": 600,
+                "destination": "Plaça Espanya",
+                "t-in-min": 10
+            },
+            {
+                "routeId": "0230",
+                "line": "15",
+                "text-ca": "20 min",
+                "t-in-s": 1200,
+                "destination": "Plaça Catalunya",
+                "t-in-min": 20
+            }
+        ]
+    }
+}
