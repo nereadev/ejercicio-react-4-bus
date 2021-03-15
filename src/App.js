@@ -36,11 +36,11 @@ function App() {
             <input type="number" id="num-parada" />
             <button type="submit">Buscar</button>
           </form>
-          <FormLinea hidden={!(paradas.data.ibus.length !== 0)}></FormLinea>
+          <FormLinea paradaValida={!(paradas.data.ibus.length !== 0)}></FormLinea>
         </section>
         <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
           La parada seleccionada no es válida
-          </div>
+        </div>
       </Container>
     </ParadasContext.Provider>
   );
