@@ -3,28 +3,36 @@
     "data": {
         "ibus": [
             {
-                "routeId": "0230",
-                "line": "23",
+                "routeId": "2310",
+                "line": "V31",
+                "text-ca": "imminent",
+                "t-in-s": 24,
+                "destination": "Trinitat Vella",
+                "t-in-min": 0
+            },
+            {
+                "routeId": "1261",
+                "line": "126",
+                "text-ca": "2 min",
+                "t-in-s": 133,
+                "destination": "Trinitat Vella",
+                "t-in-min": 2
+            },
+            {
+                "routeId": "0111",
+                "line": "11",
                 "text-ca": "7 min",
-                "t-in-s": 441,
-                "destination": "Parc Logístic",
+                "t-in-s": 469,
+                "destination": "Trinitat Vella",
                 "t-in-min": 7
             },
             {
-                "routeId": "0230",
-                "line": "7",
-                "text-ca": "10 min",
-                "t-in-s": 600,
-                "destination": "Plaça Espanya",
-                "t-in-min": 10
-            },
-            {
-                "routeId": "0230",
-                "line": "15",
-                "text-ca": "20 min",
-                "t-in-s": 1200,
-                "destination": "Plaça Catalunya",
-                "t-in-min": 20
+                "routeId": "1270",
+                "line": "127",
+                "text-ca": "35 min",
+                "t-in-s": 2130,
+                "destination": "Roquetes",
+                "t-in-min": 35
             }
         ]
     }
