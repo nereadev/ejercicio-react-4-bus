@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Container } from "react-bootstrap";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
@@ -7,13 +7,24 @@ import paradasJson from "./paradasBus.json";
 
 function App() {
   const [paradas, setParadas] = useState(paradasJson);
+  const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
+  const lineaSeleccionada = useMemo(() =>
+    (rutaSeleccionada.length !== 0) ? rutaSeleccionada[0].line : "", [rutaSeleccionada]);
+  const tiempoEsperaMin = useMemo(() =>
+    (rutaSeleccionada.length !== 0) ? rutaSeleccionada[0]["t-in-min"] : "", [rutaSeleccionada]);
+  const seleccionarRuta = (event) => {
+    const rutaFiltrada = paradas.data.ibus.filter(parada => parada.line === event.target.value);
+    setRutaSeleccionada(rutaFiltrada);
+  };
   return (
     <ParadasContext.Provider value={paradas}>
       <Container className="contenedor">
         <header className="cabecera">
           <h1>Parada nº 15</h1>
           <Display />
-          <h2>Tiempo para la línea 60: 2 minutos</h2>
+          <h2 hidden={lineaSeleccionada === ""}>
+            Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
+          </h2>
         </header>
         <section className="forms">
           <form>
@@ -21,7 +32,10 @@ function App() {
             <input type="number" id="num-parada" />
             <button type="submit">Buscar</button>
           </form>
-          <FormLinea paradaValida={!(paradas.data.ibus.length !== 0)}></FormLinea>
+          <FormLinea
+            paradaValida={!(paradas.data.ibus.length !== 0)}
+            seleccionarRuta={seleccionarRuta}
+          ></FormLinea>
         </section>
         <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
           La parada seleccionada no es válida
