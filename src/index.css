@@ -24,6 +24,10 @@ body {
   display: flex;
   position: relative;
 }
+ .bus:hover {
+  margin-top: -90px;
+  transition: margin-top 6s;
+} 
 .linea {
   width: 40px;
 }
