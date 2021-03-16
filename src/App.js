@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Container } from "react-bootstrap";
+import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
 import ParadasContext from "./contexts/ParadasContext";
 import paradasJson from "./paradasBus.json";
@@ -11,23 +12,7 @@ function App() {
       <Container className="contenedor">
         <header className="cabecera">
           <h1>Parada nº 15</h1>
-          <div className="display">
-            <div className="bus">
-              <span className="linea">V16</span>
-              <span className="destino">Universitat</span>
-              <span className="tiempo">10min</span>
-            </div>
-            <div className="bus">
-              <span className="linea">H12</span>
-              <span className="destino">Pla de Palau</span>
-              <span className="tiempo">1min</span>
-            </div>
-            <div className="bus">
-              <span className="linea">32</span>
-              <span className="destino">Barceloneta</span>
-              <span className="tiempo">4min</span>
-            </div>
-          </div>
+          <Display />
           <h2>Tiempo para la línea 60: 2 minutos</h2>
         </header>
         <section className="forms">
