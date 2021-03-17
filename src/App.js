@@ -9,6 +9,7 @@ function App() {
   const [paradas, setParadas] = useState(paradasJson);
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
   const [paradaInput, setParadaInput] = useState("");
+  const [muestraToast, setMuestraToast] = useState(false);
   const lineaSeleccionada = useMemo(() =>
     (rutaSeleccionada.length !== 0) ? rutaSeleccionada[0].line : "", [rutaSeleccionada]);
   const tiempoEsperaMin = useMemo(() =>
@@ -18,6 +19,10 @@ function App() {
     setRutaSeleccionada(rutaFiltrada);
   };
   const modificarValue = (event) => {
+    if (event.target.value < 0) {
+      setMuestraToast(true);
+      setTimeout(() => setMuestraToast(false), 1200);
+    }
     setParadaInput(event.target.value >= 0 ? event.target.value : paradaInput);
   };
   return (
@@ -41,6 +46,9 @@ function App() {
               onChange={(e) => modificarValue(e)} />
             <button type="submit">Buscar</button>
           </form>
+          <div className={`error-padre${!muestraToast ? " no-display" : ""}`}>
+            <p className="error-num-negativo">El número de parada no puede ser negativo</p>
+          </div>
           <FormLinea
             paradaValida={!(paradas.data.ibus.length !== 0)}
             seleccionarRuta={seleccionarRuta}

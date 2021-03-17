@@ -27,7 +27,7 @@ body {
  .bus:hover {
   margin-top: -90px;
   transition: margin-top 6s;
-} 
+}
 .linea {
   width: 40px;
 }
@@ -69,4 +69,25 @@ input {
 select, button, .tiempo-linea {
   background-color: rgb(107, 189, 91);
   color: #fff;
+}
+.error-padre {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+.error-padre.no-display {
+  opacity: 0;
+  transition: 0.7s;
+}
+.error-num-negativo {
+  position: fixed;
+  display: inline-block;
+  padding: 0.2rem 0.2rem;
+  margin-top: -1rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.8rem;
+  color: black;
+  border: 2px solid #616161;
+  border-radius: 5px;
+  background-color: #ebc2b8;
 }
