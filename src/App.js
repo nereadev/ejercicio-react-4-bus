@@ -8,6 +8,7 @@ import paradasJson from "./paradasBus.json";
 function App() {
   const [paradas, setParadas] = useState(paradasJson);
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
+  const [paradaInput, setParadaInput] = useState("");
   const lineaSeleccionada = useMemo(() =>
     (rutaSeleccionada.length !== 0) ? rutaSeleccionada[0].line : "", [rutaSeleccionada]);
   const tiempoEsperaMin = useMemo(() =>
@@ -15,6 +16,9 @@ function App() {
   const seleccionarRuta = (event) => {
     const rutaFiltrada = paradas.data.ibus.filter(parada => parada.line === event.target.value);
     setRutaSeleccionada(rutaFiltrada);
+  };
+  const modificarValue = (event) => {
+    setParadaInput(event.target.value >= 0 ? event.target.value : paradaInput);
   };
   return (
     <ParadasContext.Provider value={paradas}>
@@ -29,7 +33,12 @@ function App() {
         <section className="forms">
           <form>
             <label htmlFor="num-parada">Parada nº: </label>
-            <input type="number" id="num-parada" />
+            <input
+              type="number"
+              className="num-parada"
+              id="num-parada"
+              value={paradaInput}
+              onChange={(e) => modificarValue(e)} />
             <button type="submit">Buscar</button>
           </form>
           <FormLinea
