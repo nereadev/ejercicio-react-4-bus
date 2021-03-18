@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import ParadasContext from "../contexts/ParadasContext";
 
 const Display = () => {
@@ -19,3 +19,4 @@ const Display = () => {
 };
 
 export default Display;
+
