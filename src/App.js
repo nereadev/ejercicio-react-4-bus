@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Container } from "react-bootstrap";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
 import ParadasContext from "./contexts/ParadasContext";
@@ -21,36 +22,45 @@ function App() {
     setParadaInput(event.target.value >= 0 ? event.target.value : paradaInput);
   };
   return (
-    <ParadasContext.Provider value={paradas}>
-      <Container className="contenedor">
-        <header className="cabecera">
-          <h1>Parada nº 15</h1>
-          <Display />
-          <h2 hidden={lineaSeleccionada === ""}>
-            Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
+    <Router>
+      <Switch>
+        <Route path="/parada" exact>
+          <ParadasContext.Provider value={paradas} >
+            <Container className="contenedor">
+              <header className="cabecera">
+                <h1>Parada nº 15</h1>
+                <Display />
+                <h2 hidden={lineaSeleccionada === ""}>
+                  Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
           </h2>
-        </header>
-        <section className="forms">
-          <form>
-            <label htmlFor="num-parada">Parada nº: </label>
-            <input
-              type="number"
-              className="num-parada"
-              id="num-parada"
-              value={paradaInput}
-              onChange={(e) => modificarValue(e)} />
-            <button type="submit">Buscar</button>
-          </form>
-          <FormLinea
-            paradaValida={!(paradas.data.ibus.length !== 0)}
-            seleccionarRuta={seleccionarRuta}
-          ></FormLinea>
-        </section>
-        <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
-          La parada seleccionada no es válida
+              </header>
+              <section className="forms">
+                <form>
+                  <label htmlFor="num-parada">Parada nº: </label>
+                  <input
+                    type="number"
+                    className="num-parada"
+                    id="num-parada"
+                    value={paradaInput}
+                    onChange={(e) => modificarValue(e)} />
+                  <button type="submit">Buscar</button>
+                </form>
+                <FormLinea
+                  paradaValida={!(paradas.data.ibus.length !== 0)}
+                  seleccionarRuta={seleccionarRuta}
+                ></FormLinea>
+              </section>
+              <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
+                La parada seleccionada no es válida
         </div>
-      </Container>
-    </ParadasContext.Provider>
+            </Container>
+          </ParadasContext.Provider >
+        </Route>
+        <Route path="/linea/X" exact>
+          <p>Aquí va la parada X</p>
+        </Route>
+      </Switch>
+    </Router>
   );
 };
 
