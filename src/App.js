@@ -37,35 +37,50 @@ function App() {
                 <Display />
                 <h2 hidden={lineaSeleccionada === ""}>
                   Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
-          </h2>
-        </header>
-        <section className="forms">
-          <form>
-            <label htmlFor="num-parada">Parada nº: </label>
-            <input
-              type="number"
-              className="num-parada"
-              id="num-parada"
-              value={paradaInput}
-              onChange={(e) => modificarValue(e)} />
-            <button type="submit">Buscar</button>
-          </form>
-          <div className={`error-padre${!muestraToast ? " no-display" : ""}`}>
-            <p className="error-num-negativo">El número de parada no puede ser negativo</p>
-          </div>
-          <FormLinea
-            paradaValida={!(paradas.data.ibus.length !== 0)}
-            seleccionarRuta={seleccionarRuta}
-          ></FormLinea>
-        </section>
-        <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
-          La parada seleccionada no es válida
+                </h2>
+              </header>
+              <section className="forms">
+                <form>
+                  <label htmlFor="num-parada">Parada nº: </label>
+                  <input
+                    type="number"
+                    className="num-parada"
+                    id="num-parada"
+                    value={paradaInput}
+                    onChange={(e) => modificarValue(e)} />
+                  <button type="submit">Buscar</button>
+                </form>
+                <div className={`error-padre${!muestraToast ? " no-display" : ""}`}>
+                  <p className="error-num-negativo">El número de parada no puede ser negativo</p>
+                </div>
+                <FormLinea
+                  paradaValida={!(paradas.data.ibus.length !== 0)}
+                  seleccionarRuta={seleccionarRuta}
+                ></FormLinea>
+              </section>
+              <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
+                La parada seleccionada no es válida
         </div>
             </Container>
           </ParadasContext.Provider >
         </Route>
         <Route path="/linea/X" exact>
-          <p>Aquí va la parada X</p>
+          <Container className="contenedor">
+            <ParadasContext.Provider value={paradas} >
+              <header className="cabecera">
+                <h1>Línea X</h1>
+                <Display />
+                <h2 hidden={lineaSeleccionada === ""}>
+                  Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
+                </h2>
+              </header>
+              <button type="submit">Volver</button>
+            </ParadasContext.Provider >
+          </Container>
+        </Route>
+        <Route path="*" exact>
+          <h2 className="text-center p-5">No se ha encontrado la ruta solicitada.</h2>
+          <button type="submit">Volver</button>
         </Route>
       </Switch>
     </Router>
