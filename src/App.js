@@ -34,7 +34,11 @@ function App() {
       fetchLineas(paradaInput);
     }
   };
-  const fetchLineas = (buscaParada) => {
+  const fetchLineas = async () => {
+    const urlLineas = `https://api.tmb.cat/v1/ibus/stops/2775?app_id=${appId}&app_key=${appKey}`;
+    const resp = await fetch(urlLineas);
+    const datos = await resp.json();
+    console.log(datos);
     /* fetch de buscaParada, seteando paradas a lo que devuelva */
   };
   const modificarValue = (event) => {
