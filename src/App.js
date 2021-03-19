@@ -7,6 +7,9 @@ import ParadasContext from "./contexts/ParadasContext";
 import paradasJson from "./paradasBus.json";
 
 function App() {
+  const appId = "7cafef14";
+  const appKey = "a77affc64ad3ed493dc6a4da7fbec9f7";
+  const [datosAPI, setDatosAPI] = useState(null);
   const [paradas, setParadas] = useState(paradasJson);
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
   const [paradaInput, setParadaInput] = useState("");
@@ -18,6 +21,21 @@ function App() {
   const seleccionarRuta = (event) => {
     const rutaFiltrada = paradas.data.ibus.filter(parada => parada.line === event.target.value);
     setRutaSeleccionada(rutaFiltrada);
+  };
+  const checkExistenciaYFetch = async (e) => {
+    e.preventDefault();
+    const urlTransit = `https://api.tmb.cat/v1/transit/parades?app_id=${appId}&app_key=${appKey}`;
+    const resp = await fetch(urlTransit);
+    const datos = await resp.json();
+    setDatosAPI(datos);
+    const existeParada =
+      datos.features.filter(feature => feature.properties.CODI_PARADA === +paradaInput).length > 0;
+    if (existeParada) {
+      fetchLineas(paradaInput);
+    }
+  };
+  const fetchLineas = (buscaParada) => {
+    /* fetch de buscaParada, seteando paradas a lo que devuelva */
   };
   const modificarValue = (event) => {
     if (event.target.value < 0) {
@@ -40,7 +58,7 @@ function App() {
                 </h2>
               </header>
               <section className="forms">
-                <form>
+                <form onSubmit={checkExistenciaYFetch}>
                   <label htmlFor="num-parada">Parada nº: </label>
                   <input
                     type="number"
