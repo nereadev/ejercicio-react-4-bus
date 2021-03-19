@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 import ParadasContext from "../contexts/ParadasContext";
 
 function FormLinea(props) {
-  const { paradaValida, seleccionarRuta } = props;
-  const paradas = useContext(ParadasContext).data.ibus;
+  const { seleccionarRuta } = props;
+  const protoparadas = useContext(ParadasContext);
+  const paradas = (protoparadas.length !== 0) ? protoparadas.data.ibus : [];
   return (
-    <Form hidden={paradaValida}>
+    <Form>
       <Form.Label htmlFor="tiempo-linea">Tiempo para que llegue la línea: </Form.Label>
       <select
         className="tiempo-linea"
@@ -15,10 +16,12 @@ function FormLinea(props) {
         onChange={(e) => seleccionarRuta(e)}>
         <option value="">Elige línea</option>
         {
-          paradas.map(parada => <option
-            key={parada.routeId}
-            value={parada.line}
-          >{parada.line}</option>)
+          (protoparadas.length !== 0) ?
+            paradas.map(parada => <option
+              key={parada.routeId}
+              value={parada.line}
+            >{parada.line}</option>) :
+            null
         }
       </select>
     </Form>
@@ -26,7 +29,6 @@ function FormLinea(props) {
 };
 
 FormLinea.propTypes = {
-  paradaValida: PropTypes.bool.isRequired,
   seleccionarRuta: PropTypes.func.isRequired
 };
 

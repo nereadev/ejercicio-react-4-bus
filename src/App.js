@@ -1,18 +1,19 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
 import ParadasContext from "./contexts/ParadasContext";
-import paradasJson from "./paradasBus.json";
 
 function App() {
   const appId = "7cafef14";
   const appKey = "a77affc64ad3ed493dc6a4da7fbec9f7";
   const [datosAPI, setDatosAPI] = useState(null);
-  const [paradas, setParadas] = useState(paradasJson);
+  const [paradas, setParadas] = useState([]);
+  const [paradaInexistente, setParadaInexistente] = useState(false);
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
   const [paradaInput, setParadaInput] = useState("");
+  const [paradaSeleccionada, setParadaSeleccionada] = useState("");
   const [muestraToast, setMuestraToast] = useState(false);
   const lineaSeleccionada = useMemo(() =>
     (rutaSeleccionada.length !== 0) ? rutaSeleccionada[0].line : "", [rutaSeleccionada]);
@@ -24,22 +25,23 @@ function App() {
   };
   const checkExistenciaYFetch = async (e) => {
     e.preventDefault();
+    setParadaSeleccionada(`${paradaInput}`);
     const urlTransit = `https://api.tmb.cat/v1/transit/parades?app_id=${appId}&app_key=${appKey}`;
-    const resp = await fetch(urlTransit);
-    const datos = await resp.json();
-    setDatosAPI(datos);
-    const existeParada =
-      datos.features.filter(feature => feature.properties.CODI_PARADA === +paradaInput).length > 0;
+    const respTransit = await fetch(urlTransit);
+    const datosTransit = await respTransit.json();
+    setDatosAPI(datosTransit);
+    const existeParada = datosTransit.features
+      .filter(feature => feature.properties.CODI_PARADA === +paradaInput).length > 0;
     if (existeParada) {
-      fetchLineas(paradaInput);
+      setParadaInexistente(false);
+      const urlLineas = `https://api.tmb.cat/v1/ibus/stops/${paradaInput}?app_id=${appId}&app_key=${appKey}`;
+      const respLineas = await fetch(urlLineas);
+      const datosLineas = await respLineas.json();
+      console.log(datosLineas);
+      setParadas(datosLineas);
+    } else {
+      setParadaInexistente(true);
     }
-  };
-  const fetchLineas = async () => {
-    const urlLineas = `https://api.tmb.cat/v1/ibus/stops/2775?app_id=${appId}&app_key=${appKey}`;
-    const resp = await fetch(urlLineas);
-    const datos = await resp.json();
-    console.log(datos);
-    /* fetch de buscaParada, seteando paradas a lo que devuelva */
   };
   const modificarValue = (event) => {
     if (event.target.value < 0) {
@@ -55,7 +57,7 @@ function App() {
           <ParadasContext.Provider value={paradas} >
             <Container className="contenedor">
               <header className="cabecera">
-                <h1>Parada nº 15</h1>
+                <h1>Parada nº {paradaSeleccionada}</h1>
                 <Display />
                 <h2 hidden={lineaSeleccionada === ""}>
                   Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
@@ -75,14 +77,21 @@ function App() {
                 <div className={`error-padre${!muestraToast ? " no-display" : ""}`}>
                   <p className="error-num-negativo">El número de parada no puede ser negativo</p>
                 </div>
-                <FormLinea
-                  paradaValida={!(paradas.data.ibus.length !== 0)}
-                  seleccionarRuta={seleccionarRuta}
-                ></FormLinea>
+                {
+                  (paradas.length !== 0 && !paradaInexistente) ?
+                    ((paradas.data.ibus.length !== 0) ?
+                      <FormLinea
+                        seleccionarRuta={seleccionarRuta}
+                      ></FormLinea> :
+                      <div className="text-center">
+                        No hay buses disponibles para la parada seleccionada
+                      </div>) :
+                    null
+                }
               </section>
-              <div className="text-center" hidden={paradas.data.ibus.length !== 0}>
+              <div className="text-center" hidden={!paradaInexistente}>
                 La parada seleccionada no es válida
-        </div>
+              </div>
             </Container>
           </ParadasContext.Provider >
         </Route>
@@ -110,16 +119,3 @@ function App() {
 };
 
 export default App;
-
-/* const appId = "7cafef14";
-const appKey = "a77affc64ad3ed493dc6a4da7fbec9f7"; parada: 3402
-const url = `https://api.tmb.cat/v1/ibus/stops/2775?app_id=${appId}&app_key=${appKey}`;
-const [datos, setDatos] = useState(null);
-useEffect(() => {
-  (async () => {
-    const resp = await fetch(url);
-    const datos = await resp.json();
-    setDatos(datos);
-    console.log(datos);
-  })();
-}, [url]); */
