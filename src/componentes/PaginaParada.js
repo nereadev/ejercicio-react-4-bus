@@ -23,7 +23,7 @@ const PaginaParada = (props) => {
             <Container className="contenedor">
                 <header className="cabecera">
                     <h1>{paradaInexistente ?
-                        `No existe la parada ${paradaSeleccionada}` :
+                        `No existe la parada nº ${paradaSeleccionada}` :
                         `Parada nº ${paradaSeleccionada}`}</h1>
                     <Display />
                     <h2 hidden={lineaSeleccionada === ""}>
