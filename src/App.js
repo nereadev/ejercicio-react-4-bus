@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
@@ -14,8 +14,10 @@ function App() {
   const [datosAPI, setDatosAPI] = useState(null);
   const [paradas, setParadas] = useState([]);
   const [paradaInexistente, setParadaInexistente] = useState(false);
+  const intervalDisplay = useRef(null);
+  const [displayStyle, setDisplayStyle] = useState({});
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
-  const [paradaInput, setParadaInput] = useState(""); //ejemplo paradaInput= 3402
+  const [paradaInput, setParadaInput] = useState(""); //ejemplo paradaInput= 3402 2134 2137
   const [paradaSeleccionada, setParadaSeleccionada] = useState("");
   const [muestraToast, setMuestraToast] = useState(false);
   const lineaSeleccionada = useMemo(() =>
@@ -26,6 +28,20 @@ function App() {
     const rutaFiltrada = paradas.data.ibus.filter(parada => parada.line === event.target.value);
     setRutaSeleccionada(rutaFiltrada);
   };
+  useEffect(() => {
+    if (paradas.length !== 0 && !paradaInexistente && (paradas.data.ibus.length !== 0)) {
+      let counter = 0;
+      intervalDisplay.current = setInterval(() => {
+        setDisplayStyle({
+          marginTop: `-${30 * (counter % paradas.data.ibus.length)}px`,
+          marginBottom: `${30 * (counter % paradas.data.ibus.length)}px`,
+        });
+        counter++;
+      }, 2000);
+    } else {
+      clearInterval(intervalDisplay.current);
+    }
+  }, [paradas, paradaInexistente]);
   const checkExistenciaYFetch = async (e) => {
     e.preventDefault();
     setParadaSeleccionada(`${paradaInput}`);
@@ -65,6 +81,7 @@ function App() {
             tiempoEsperaMin={tiempoEsperaMin}
             muestraToast={muestraToast}
             paradaInexistente={paradaInexistente}
+            displayStyle={displayStyle}
             checkExistenciaYFetch={checkExistenciaYFetch}
             modificarValue={modificarValue}
             seleccionarRuta={seleccionarRuta}
