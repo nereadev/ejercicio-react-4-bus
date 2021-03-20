@@ -15,11 +15,12 @@ const PaginaLinea = (props) => {
                 <header className="cabecera">
                     <h1>Línea X</h1>
                     <Display />
-                    <h2 hidden={lineaSeleccionada === ""}>
-                        Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
-                </h2>
+                    <h2>
+                        Tiempo para la línea {lineaSeleccionada}:
+                         {tiempoEsperaMin} minutos
+                    </h2>
                 </header>
-                <button type="submit">Volver</button>
+                <a href="/parada"><button type="submit">Volver</button></a>
             </ParadasContext.Provider >
         </Container>
     );
