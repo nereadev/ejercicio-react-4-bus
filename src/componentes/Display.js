@@ -19,7 +19,8 @@ const Display = (props) => {
                 <span className="linea">{parada.line}</span>
                 <span className="destino">{parada.destination}</span>
                 <span className="tiempo">{`${parada["t-in-min"]}min`}</span>
-              </div>) :
+              </div>
+            </a>) :
           null
       }
     </div >
