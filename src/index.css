@@ -23,6 +23,7 @@ body {
 .bus {
   display: flex;
   position: relative;
+  transition: 1.5s;
 }
 .linea {
   width: 40px;
