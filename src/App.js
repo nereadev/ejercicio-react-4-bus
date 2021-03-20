@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { Container } from "react-bootstrap";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
 import PaginaLinea from "./componentes/PaginaLinea";
@@ -76,6 +76,9 @@ function App() {
             lineaSeleccionada={lineaSeleccionada}
             tiempoEsperaMin={tiempoEsperaMin}
           />
+        </Route>
+        <Route path="/">
+          <Redirect to="/parada" />
         </Route>
         <Route path="*" exact>
           <PaginaNoEncontrada />
