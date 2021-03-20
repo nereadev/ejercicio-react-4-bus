@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
 import PaginaLinea from "./componentes/PaginaLinea";
+import PaginaNoEncontrada from "./componentes/PaginaNoEncontrada";
 import PaginaParada from "./componentes/PaginaParada";
 import ParadasContext from "./contexts/ParadasContext";
 
@@ -77,8 +78,7 @@ function App() {
           />
         </Route>
         <Route path="*" exact>
-          <h2 className="text-center p-5">No se ha encontrado la ruta solicitada.</h2>
-          <button type="submit">Volver</button>
+          <PaginaNoEncontrada />
         </Route>
       </Switch>
     </Router>
