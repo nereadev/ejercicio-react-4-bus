@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
+import PaginaParada from "./componentes/PaginaParada";
 import ParadasContext from "./contexts/ParadasContext";
 
 function App() {
@@ -12,7 +13,7 @@ function App() {
   const [paradas, setParadas] = useState([]);
   const [paradaInexistente, setParadaInexistente] = useState(false);
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
-  const [paradaInput, setParadaInput] = useState("");
+  const [paradaInput, setParadaInput] = useState(""); //ejemplo paradaInput= 3402
   const [paradaSeleccionada, setParadaSeleccionada] = useState("");
   const [muestraToast, setMuestraToast] = useState(false);
   const lineaSeleccionada = useMemo(() =>
@@ -54,46 +55,18 @@ function App() {
     <Router>
       <Switch>
         <Route path="/parada" exact>
-          <ParadasContext.Provider value={paradas} >
-            <Container className="contenedor">
-              <header className="cabecera">
-                <h1>Parada nº {paradaSeleccionada}</h1>
-                <Display />
-                <h2 hidden={lineaSeleccionada === ""}>
-                  Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
-                </h2>
-              </header>
-              <section className="forms">
-                <form onSubmit={checkExistenciaYFetch}>
-                  <label htmlFor="num-parada">Parada nº: </label>
-                  <input
-                    type="number"
-                    className="num-parada"
-                    id="num-parada"
-                    value={paradaInput}
-                    onChange={(e) => modificarValue(e)} />
-                  <button type="submit">Buscar</button>
-                </form>
-                <div className={`error-padre${!muestraToast ? " no-display" : ""}`}>
-                  <p className="error-num-negativo">El número de parada no puede ser negativo</p>
-                </div>
-                {
-                  (paradas.length !== 0 && !paradaInexistente) ?
-                    ((paradas.data.ibus.length !== 0) ?
-                      <FormLinea
-                        seleccionarRuta={seleccionarRuta}
-                      ></FormLinea> :
-                      <div className="text-center">
-                        No hay buses disponibles para la parada seleccionada
-                      </div>) :
-                    null
-                }
-              </section>
-              <div className="text-center" hidden={!paradaInexistente}>
-                La parada seleccionada no es válida
-              </div>
-            </Container>
-          </ParadasContext.Provider >
+          <PaginaParada
+            paradas={paradas}
+            paradaInput={paradaInput}
+            paradaSeleccionada={paradaSeleccionada}
+            lineaSeleccionada={lineaSeleccionada}
+            tiempoEsperaMin={tiempoEsperaMin}
+            muestraToast={muestraToast}
+            paradaInexistente={paradaInexistente}
+            checkExistenciaYFetch={checkExistenciaYFetch}
+            modificarValue={modificarValue}
+            seleccionarRuta={seleccionarRuta}
+          />
         </Route>
         <Route path="/linea/X" exact>
           <Container className="contenedor">
