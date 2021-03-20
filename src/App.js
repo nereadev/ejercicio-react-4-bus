@@ -3,6 +3,7 @@ import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Display from "./componentes/Display";
 import FormLinea from "./componentes/FormLinea";
+import PaginaLinea from "./componentes/PaginaLinea";
 import PaginaParada from "./componentes/PaginaParada";
 import ParadasContext from "./contexts/ParadasContext";
 
@@ -69,18 +70,11 @@ function App() {
           />
         </Route>
         <Route path="/linea/X" exact>
-          <Container className="contenedor">
-            <ParadasContext.Provider value={paradas} >
-              <header className="cabecera">
-                <h1>Línea X</h1>
-                <Display />
-                <h2 hidden={lineaSeleccionada === ""}>
-                  Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
-                </h2>
-              </header>
-              <button type="submit">Volver</button>
-            </ParadasContext.Provider >
-          </Container>
+          <PaginaLinea
+            paradas={paradas}
+            lineaSeleccionada={lineaSeleccionada}
+            tiempoEsperaMin={tiempoEsperaMin}
+          />
         </Route>
         <Route path="*" exact>
           <h2 className="text-center p-5">No se ha encontrado la ruta solicitada.</h2>
