@@ -22,7 +22,9 @@ const PaginaParada = (props) => {
         <ParadasContext.Provider value={paradas} >
             <Container className="contenedor">
                 <header className="cabecera">
-                    <h1>Parada nº {paradaSeleccionada}</h1>
+                    <h1>{paradaInexistente ?
+                        `No existe la parada nº ${paradaSeleccionada}` :
+                        `Parada nº ${paradaSeleccionada}`}</h1>
                     <Display />
                     <h2 hidden={lineaSeleccionada === ""}>
                         Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
