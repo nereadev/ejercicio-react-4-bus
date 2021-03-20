@@ -2,7 +2,7 @@ import { Container } from "react-bootstrap";
 import PropTypes from "prop-types";
 import ParadasContext from "../contexts/ParadasContext";
 import Display from "./Display";
-import FormLinea from "./FormLinea";
+import FormInput from "./FormInput";
 
 const PaginaParada = (props) => {
     const {
@@ -28,32 +28,15 @@ const PaginaParada = (props) => {
                         Tiempo para la línea {lineaSeleccionada}: {tiempoEsperaMin} minutos
                 </h2>
                 </header>
-                <section className="forms">
-                    <form onSubmit={checkExistenciaYFetch}>
-                        <label htmlFor="num-parada">Parada nº: </label>
-                        <input
-                            type="number"
-                            className="num-parada"
-                            id="num-parada"
-                            value={paradaInput}
-                            onChange={(e) => modificarValue(e)} />
-                        <button type="submit">Buscar</button>
-                    </form>
-                    <div className={`error-padre${!muestraToast ? " no-display" : ""}`}>
-                        <p className="error-num-negativo">El número de parada no puede ser negativo</p>
-                    </div>
-                    {
-                        (paradas.length !== 0 && !paradaInexistente) ?
-                            ((paradas.data.ibus.length !== 0) ?
-                                <FormLinea
-                                    seleccionarRuta={seleccionarRuta}
-                                ></FormLinea> :
-                                <div className="text-center">
-                                    No hay buses disponibles para la parada seleccionada
-                      </div>) :
-                            null
-                    }
-                </section>
+                <FormInput
+                    paradas={paradas}
+                    paradaInput={paradaInput}
+                    muestraToast={muestraToast}
+                    checkExistenciaYFetch={checkExistenciaYFetch}
+                    modificarValue={modificarValue}
+                    paradaInexistente={paradaInexistente}
+                    seleccionarRuta={seleccionarRuta}
+                />
                 <div className="text-center" hidden={!paradaInexistente}>
                     La parada seleccionada no es válida
               </div>
