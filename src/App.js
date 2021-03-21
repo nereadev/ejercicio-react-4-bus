@@ -1,12 +1,8 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Container } from "react-bootstrap";
 import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-dom";
-import Display from "./componentes/Display";
-import FormLinea from "./componentes/FormLinea";
 import PaginaLinea from "./componentes/PaginaLinea";
 import PaginaNoEncontrada from "./componentes/PaginaNoEncontrada";
 import PaginaParada from "./componentes/PaginaParada";
-import ParadasContext from "./contexts/ParadasContext";
 
 function App() {
   const appId = "7cafef14";
@@ -87,12 +83,8 @@ function App() {
             seleccionarRuta={seleccionarRuta}
           />
         </Route>
-        <Route path="/linea/:id" component={PaginaLinea}>
-          <PaginaLinea
-            paradas={paradas}
-            lineaSeleccionada={lineaSeleccionada}
-            tiempoEsperaMin={tiempoEsperaMin}
-          />
+        <Route path="/linea/:id/:destino/:tiempo" component={PaginaLinea}>
+          <PaginaLinea />
         </Route>
         <Route path="/">
           <Redirect to="/parada" />

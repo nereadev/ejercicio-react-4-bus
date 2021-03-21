@@ -1,7 +1,5 @@
 import { useContext } from "react";
 import PropTypes from "prop-types";
-import { Redirect, Route, Switch } from "react-router";
-import { BrowserRouter as Router } from "react-router-dom";
 import ParadasContext from "../contexts/ParadasContext";
 
 const Display = (props) => {
@@ -16,7 +14,8 @@ const Display = (props) => {
           paradas.map(parada =>
             <div key={parada.routeId} className="bus" style={displayStyle}>
               <span className="linea">
-                <a href={`/linea/${parada.line}`}>{parada.line}</a>
+                <a href={`/linea/${parada.line}/
+                ${parada.destination}/${parada["t-in-min"]}`}>{parada.line}</a>
               </span>
               <span className="destino">{parada.destination}</span>
               <span className="tiempo">{`${parada["t-in-min"]}min`}</span>
