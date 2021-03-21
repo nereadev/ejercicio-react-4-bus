@@ -94,11 +94,11 @@ function App() {
             tiempoEsperaMin={tiempoEsperaMin}
           />
         </Route>
-        <Route path="*" exact>
-          <PaginaNoEncontrada />
-        </Route>
         <Route path="/">
           <Redirect to="/parada" />
+        </Route>
+        <Route path="*" exact>
+          <PaginaNoEncontrada />
         </Route>
       </Switch>
     </Router>
