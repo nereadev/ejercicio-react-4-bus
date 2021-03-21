@@ -2,9 +2,10 @@ import { useContext } from "react";
 import { Form } from "react-bootstrap";
 import PropTypes from "prop-types";
 import ParadasContext from "../contexts/ParadasContext";
+import FuncionesContext from "../contexts/FuncionesContext";
 
-function FormLinea(props) {
-  const { seleccionarRuta } = props;
+function FormLinea() {
+  const { seleccionarRuta } = useContext(FuncionesContext);
   const protoparadas = useContext(ParadasContext);
   const paradas = (protoparadas.length !== 0) ? protoparadas.data.ibus : [];
   return (
@@ -26,10 +27,6 @@ function FormLinea(props) {
       </select>
     </Form>
   );
-};
-
-FormLinea.propTypes = {
-  seleccionarRuta: PropTypes.func.isRequired
 };
 
 export default FormLinea;

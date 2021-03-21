@@ -3,6 +3,9 @@ import { BrowserRouter as Router, Redirect, Route, Switch } from "react-router-d
 import PaginaLinea from "./componentes/PaginaLinea";
 import PaginaNoEncontrada from "./componentes/PaginaNoEncontrada";
 import PaginaParada from "./componentes/PaginaParada";
+import ParadasContext from "./contexts/ParadasContext";
+import VariablesContext from "./contexts/VariablesContext";
+import FuncionesContext from "./contexts/FuncionesContext";
 
 function App() {
   const appId = "7cafef14";
@@ -13,7 +16,7 @@ function App() {
   const intervalDisplay = useRef(null);
   const [displayStyle, setDisplayStyle] = useState({});
   const [rutaSeleccionada, setRutaSeleccionada] = useState([]);
-  const [paradaInput, setParadaInput] = useState(""); //ejemplo paradaInput= 3402 2134 2137
+  const [paradaInput, setParadaInput] = useState(""); //ejemplo paradaInput = 3402
   const [paradaSeleccionada, setParadaSeleccionada] = useState("");
   const [muestraToast, setMuestraToast] = useState(false);
   const lineaSeleccionada = useMemo(() =>
@@ -25,7 +28,7 @@ function App() {
     setRutaSeleccionada(rutaFiltrada);
   };
   useEffect(() => {
-    if (paradas.length !== 0 && !paradaInexistente && (paradas.data.ibus.length !== 0)) {
+    if (paradas.length !== 0 && !paradaInexistente && paradas.data.ibus.length !== 0) {
       let counter = 0;
       intervalDisplay.current = setInterval(() => {
         setDisplayStyle({
@@ -52,7 +55,6 @@ function App() {
       const urlLineas = `https://api.tmb.cat/v1/ibus/stops/${paradaInput}?app_id=${appId}&app_key=${appKey}`;
       const respLineas = await fetch(urlLineas);
       const datosLineas = await respLineas.json();
-      console.log(datosLineas);
       setParadas(datosLineas);
     } else {
       setParadaInexistente(true);
@@ -69,19 +71,25 @@ function App() {
     <Router>
       <Switch>
         <Route path="/parada" exact>
-          <PaginaParada
-            paradas={paradas}
-            paradaInput={paradaInput}
-            paradaSeleccionada={paradaSeleccionada}
-            lineaSeleccionada={lineaSeleccionada}
-            tiempoEsperaMin={tiempoEsperaMin}
-            muestraToast={muestraToast}
-            paradaInexistente={paradaInexistente}
-            displayStyle={displayStyle}
-            checkExistenciaYFetch={checkExistenciaYFetch}
-            modificarValue={modificarValue}
-            seleccionarRuta={seleccionarRuta}
-          />
+          <ParadasContext.Provider value={paradas} >
+            <VariablesContext.Provider value={{
+              paradaInput,
+              paradaSeleccionada,
+              lineaSeleccionada,
+              tiempoEsperaMin,
+              muestraToast,
+              paradaInexistente,
+              displayStyle
+            }} >
+              <FuncionesContext.Provider value={{
+                checkExistenciaYFetch,
+                modificarValue,
+                seleccionarRuta,
+              }} >
+                <PaginaParada />
+              </FuncionesContext.Provider>
+            </VariablesContext.Provider>
+          </ParadasContext.Provider>
         </Route>
         <Route path="/linea/:id/:destino/:tiempo" component={PaginaLinea}>
           <PaginaLinea />
