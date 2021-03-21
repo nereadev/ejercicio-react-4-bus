@@ -14,13 +14,13 @@ const Display = (props) => {
       {
         (protoparadas.length !== 0 && !paradaInexistente) ?
           paradas.map(parada =>
-            <a href="/linea/X">
-              <div key={parada.routeId} className="bus" style={displayStyle}>
-                <span className="linea">{parada.line}</span>
-                <span className="destino">{parada.destination}</span>
-                <span className="tiempo">{`${parada["t-in-min"]}min`}</span>
-              </div>
-            </a>) :
+            <div key={parada.routeId} className="bus" style={displayStyle}>
+              <span className="linea">
+                <a href={`/linea/${parada.line}`}>{parada.line}</a>
+              </span>
+              <span className="destino">{parada.destination}</span>
+              <span className="tiempo">{`${parada["t-in-min"]}min`}</span>
+            </div>) :
           null
       }
     </div >
