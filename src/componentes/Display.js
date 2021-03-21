@@ -1,12 +1,12 @@
 import { useContext } from "react";
 import PropTypes from "prop-types";
 import ParadasContext from "../contexts/ParadasContext";
+import VariablesContext from "../contexts/VariablesContext";
 
-const Display = (props) => {
-  const { paradaInexistente, displayStyle } = props;
+const Display = () => {
+  const { paradaInexistente, displayStyle } = useContext(VariablesContext);
   const protoparadas = useContext(ParadasContext);
   const paradas = (protoparadas.length !== 0) ? protoparadas.data.ibus : [];
-
   return (
     <div className="display">
       {
@@ -24,14 +24,6 @@ const Display = (props) => {
       }
     </div >
   );
-};
-
-Display.propTypes = {
-  paradaInexistente: PropTypes.bool.isRequired,
-  displayStyle: PropTypes.shape({
-    marginTop: PropTypes.string,
-    marginBottom: PropTypes.string,
-  }).isRequired,
 };
 
 export default Display;
