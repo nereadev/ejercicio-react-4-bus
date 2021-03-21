@@ -2,6 +2,7 @@ import { Container } from "react-bootstrap";
 import PropTypes from "prop-types";
 import ParadasContext from "../contexts/ParadasContext";
 import Display from "./Display";
+import { useParams } from "react-router";
 
 const PaginaLinea = (props) => {
     const {
@@ -9,14 +10,15 @@ const PaginaLinea = (props) => {
         lineaSeleccionada,
         tiempoEsperaMin
     } = props;
+    const { id } = useParams();
     return (
         <Container className="contenedor">
             <ParadasContext.Provider value={paradas} >
                 <header className="cabecera">
-                    <h1>Línea X</h1>
+                    <h1>Línea {id}</h1>
                     <Display />
                     <h2>
-                        Tiempo para la línea {lineaSeleccionada}:
+                        Tiempo para la línea {id}:
                          {tiempoEsperaMin} minutos
                     </h2>
                 </header>

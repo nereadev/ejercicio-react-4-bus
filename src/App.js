@@ -87,7 +87,7 @@ function App() {
             seleccionarRuta={seleccionarRuta}
           />
         </Route>
-        <Route path="/linea/X" exact>
+        <Route path="/linea/:id" component={PaginaLinea}>
           <PaginaLinea
             paradas={paradas}
             lineaSeleccionada={lineaSeleccionada}
