@@ -37,9 +37,10 @@ function App() {
         });
         counter++;
       }, 2000);
-    } else {
-      clearInterval(intervalDisplay.current);
     }
+    return () => {
+      clearInterval(intervalDisplay.current);
+    };
   }, [paradas, paradaInexistente]);
   const checkExistenciaYFetch = async (e) => {
     e.preventDefault();
@@ -94,7 +95,7 @@ function App() {
         <Route path="/linea/:id/:destino/:tiempo" component={PaginaLinea}>
           <PaginaLinea />
         </Route>
-        <Route path="/">
+        <Route path="/" exact>
           <Redirect to="/parada" />
         </Route>
         <Route path="*" exact>
